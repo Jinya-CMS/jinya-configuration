@@ -8,7 +8,7 @@ use Jinya\Configuration\Adapter\Exceptions\SetNotSupportedException;
 class IniAdapter implements AdapterInterface
 {
     /**
-     * @var array<string, array<string, bool|int|string|null>|bool|int|string|null>
+     * @var array<string, array<string, bool|int|string|null>|bool|int|string>
      */
     private array $parsedConfig;
 
@@ -17,9 +17,12 @@ class IniAdapter implements AdapterInterface
         $this->parsedConfig = $this->parseIni();
     }
 
+    /**
+     * @return array<string, array<string, bool|int|string|null>|bool|int|string>
+     */
     private function parseIni(): array
     {
-        return parse_ini_file($this->configFile, true, INI_SCANNER_TYPED);
+        return parse_ini_file($this->configFile, true, INI_SCANNER_TYPED) ?: [];
     }
 
     /**
@@ -28,6 +31,7 @@ class IniAdapter implements AdapterInterface
     public function get(string $key, ?string $group = null, bool|int|string|null $default = null): string|bool|int|null
     {
         if (!$group) {
+            /** @phpstan-ignore-next-line */
             return $this->parsedConfig[$key] ?? $default;
         }
 
@@ -45,6 +49,7 @@ class IniAdapter implements AdapterInterface
             return array_filter($this->parsedConfig, static fn (mixed $data) => !is_array($data));
         }
 
+        /** @phpstan-ignore-next-line */
         return $this->parsedConfig[$group] ?? [];
     }
 
