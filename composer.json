@@ -1,0 +1,26 @@
+{
+  "name": "jinya/configuration",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Imanuel Ulbricht",
+      "email": "imanuel.ulbricht@jinya.de"
+    }
+  ],
+  "require": {
+    "php": ">=8.2"
+  },
+  "require-dev": {
+    "laravel/pint": "v1.13.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "Jinya\\Configuration\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Jinya\\Configuration\\": "tests/"
+    }
+  }
+}
