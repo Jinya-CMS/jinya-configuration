@@ -18,45 +18,45 @@ class EnvironmentAdapterTest extends TestCase
 
     public function testGet(): void
     {
-        putenv('HELLO=world');
-        $env = $this->environmentAdapter->get('hello');
+        putenv('GETHELLO=world');
+        $env = $this->environmentAdapter->get('gethello');
 
         self::assertEquals('world', $env);
 
-        putenv('HELLO_WORLD=world');
-        $env = $this->environmentAdapter->get('world', 'hello');
+        putenv('GETHELLO_WORLD=world');
+        $env = $this->environmentAdapter->get('world', 'gethello');
 
         self::assertEquals('world', $env);
 
-        $env = $this->environmentAdapter->get('world', default: 'hello');
+        $env = $this->environmentAdapter->get('getworld', default: 'hello');
 
         self::assertEquals('hello', $env);
     }
 
     public function testSet(): void
     {
-        $this->environmentAdapter->set('hello', 'world', 'world');
+        $this->environmentAdapter->set('hello', 'world', 'setworld');
 
-        $setEnv = getenv('WORLD_HELLO');
+        $setEnv = getenv('SETWORLD_HELLO');
         assertEquals('world', $setEnv);
 
-        $this->environmentAdapter->set('world', 'world');
+        $this->environmentAdapter->set('setworld', 'world');
 
-        $setEnv = getenv('WORLD');
+        $setEnv = getenv('SETWORLD');
         assertEquals('world', $setEnv);
     }
 
     public function testDelete(): void
     {
-        putenv('GOODBYE=world');
-        $this->environmentAdapter->delete('goodbye');
+        putenv('DELETEGOODBYE=world');
+        $this->environmentAdapter->delete('deletegoodbye');
 
-        self::assertFalse(getenv('GOODBYE'));
+        self::assertFalse(getenv('DELETEGOODBYE'));
 
-        putenv('GOODBYE_WORLD=world');
-        $this->environmentAdapter->delete('world', 'goodbye');
+        putenv('DELETEGOODBYE_WORLD=world');
+        $this->environmentAdapter->delete('world', 'deletegoodbye');
 
-        self::assertFalse(getenv('GOODBYE'));
+        self::assertFalse(getenv('DELETEGOODBYE_WORLD'));
     }
 
     public function testGetAll(): void
