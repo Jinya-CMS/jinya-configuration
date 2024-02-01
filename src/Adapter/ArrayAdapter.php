@@ -55,7 +55,7 @@ class ArrayAdapter implements AdapterInterface
     public function set(string $key, bool|int|string $value, ?string $group = null): void
     {
         if ($group) {
-            if (!$this->config[$group]) {
+            if (!array_key_exists($group, $this->config)) {
                 $this->config[$group] = [$key => $value];
             } else {
                 /** @phpstan-ignore-next-line */
