@@ -65,5 +65,10 @@ class EnvironmentAdapterTest extends TestCase
         $env = $this->environmentAdapter->getAll();
 
         self::assertEquals($data, $env);
+
+        $env = $this->environmentAdapter->getAll('php');
+        $data = array_filter($data, static fn (string $key) => str_starts_with($key, 'PHP_'), ARRAY_FILTER_USE_KEY);
+
+        self::assertEquals($data, $env);
     }
 }
