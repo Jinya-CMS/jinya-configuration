@@ -45,6 +45,7 @@ class ArrayAdapterTest extends TestCase
         $this->arrayAdapter->delete('bar', 'foo');
         self::assertCount(1, $this->arrayAdapter->getConfig());
         self::assertArrayHasKey('foo', $this->arrayAdapter->getConfig());
+        /** @phpstan-ignore-next-line */
         self::assertArrayNotHasKey('bar', $this->arrayAdapter->getConfig()['foo']);
 
         $this->arrayAdapter->delete('bar');
@@ -60,7 +61,9 @@ class ArrayAdapterTest extends TestCase
 
         $data = $this->arrayAdapter->getConfig();
         self::assertEquals('hello', $data['hello']);
+        /** @phpstan-ignore-next-line */
         self::assertEquals('world', $data['foo']['hello']);
+        /** @phpstan-ignore-next-line */
         self::assertEquals('world', $data['bar']['hello']);
     }
 
