@@ -5,7 +5,7 @@ namespace Jinya\Configuration\Adapter;
 class EnvironmentAdapter implements AdapterInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function get(string $key, ?string $group = null, bool|int|string|null $default = null): string|bool|int|null
     {
@@ -18,18 +18,18 @@ class EnvironmentAdapter implements AdapterInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getAll(?string $group = null): array
     {
         $env = getenv();
         if ($group) {
-            $group = strtoupper($group) . '_';
+            $group = strtoupper($group).'_';
 
             $data = array_filter($env, static fn (string $key) => str_starts_with($key, $group), ARRAY_FILTER_USE_KEY);
             $result = [];
             foreach ($data as $key => $value) {
-                $lowerKeyNoPrefix = strtolower(ltrim($key, $group));
+                $lowerKeyNoPrefix = strtolower(explode($group, $key, 2)[1]);
                 $result[$lowerKeyNoPrefix] = $value;
             }
 
@@ -40,7 +40,7 @@ class EnvironmentAdapter implements AdapterInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function set(string $key, bool|int|string $value, ?string $group = null): void
     {
@@ -54,7 +54,7 @@ class EnvironmentAdapter implements AdapterInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function delete(string $key, ?string $group = null): void
     {
