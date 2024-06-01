@@ -22,7 +22,7 @@ class IniAdapter implements AdapterInterface
      */
     private function parseIni(): array
     {
-        return parse_ini_file($this->configFile, true, INI_SCANNER_TYPED) ?: [];
+        return @parse_ini_file($this->configFile, true, INI_SCANNER_TYPED) ?: [];
     }
 
     /**

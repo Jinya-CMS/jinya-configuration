@@ -26,7 +26,14 @@ class EnvironmentAdapter implements AdapterInterface
         if ($group) {
             $group = strtoupper($group) . '_';
 
-            return array_filter($env, static fn (string $key) => str_starts_with($key, $group), ARRAY_FILTER_USE_KEY);
+            $data = array_filter($env, static fn (string $key) => str_starts_with($key, $group), ARRAY_FILTER_USE_KEY);
+            $result = [];
+            foreach ($data as $key => $value) {
+                $lowerKeyNoPrefix = ltrim(strtolower($key), $group);
+                $result[$lowerKeyNoPrefix] = $value;
+            }
+
+            return $data;
         }
 
         return $env;
