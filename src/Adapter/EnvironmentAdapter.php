@@ -33,7 +33,7 @@ class EnvironmentAdapter implements AdapterInterface
                 $result[$lowerKeyNoPrefix] = $value;
             }
 
-            return $data;
+            return $result;
         }
 
         return $env;
