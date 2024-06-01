@@ -29,7 +29,7 @@ class EnvironmentAdapter implements AdapterInterface
             $data = array_filter($env, static fn (string $key) => str_starts_with($key, $group), ARRAY_FILTER_USE_KEY);
             $result = [];
             foreach ($data as $key => $value) {
-                $lowerKeyNoPrefix = ltrim(strtolower($key), $group);
+                $lowerKeyNoPrefix = strtolower(ltrim($key, $group));
                 $result[$lowerKeyNoPrefix] = $value;
             }
 
