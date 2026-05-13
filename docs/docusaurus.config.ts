@@ -71,6 +71,11 @@ const config: Config = {
                     label: 'Documentation',
                 },
                 {
+                    href: 'https://gitlab.imanuel.dev/jinya-cms/jinya-configuration/',
+                    label: 'GitLab',
+                    position: 'right',
+                },
+                {
                     href: 'https://github.com/jinya-cms/jinya-configuration',
                     label: 'GitHub',
                     position: 'right',
