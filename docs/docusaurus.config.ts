@@ -107,6 +107,10 @@ const config: Config = {
                     title: 'More',
                     items: [
                         {
+                            href: 'https://gitlab.imanuel.dev/jinya-cms/jinya-configuration/',
+                            label: 'GitLab',
+                        },
+                        {
                             label: 'GitHub',
                             href: 'https://github.com/jinya-cms/jinya-configuration',
                         },
