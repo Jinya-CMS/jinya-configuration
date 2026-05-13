@@ -1,0 +1,44 @@
+---
+sidebar_position: 1
+---
+
+# Introduction
+
+Jinya Configuration is a flexible and powerful configuration library for PHP 8.3+. It allows you to manage configuration from various sources like environment variables, INI files, and arrays with a simple, unified API.
+
+## Features
+
+- **Multiple Adapters**: Built-in support for Environment variables, INI files, and PHP Arrays.
+- **Priority-based Loading**: Chain multiple adapters and define their search priority.
+- **Grouped Configuration**: Support for sections in INI files and prefixed environment variables.
+- **Type-Safe**: Designed with modern PHP features and type safety in mind.
+- **Extensible**: Easily implement your own adapters by following the `AdapterInterface`.
+
+## Installation
+
+You can install the library via Composer:
+
+```bash
+composer require jinya/configuration
+```
+
+## Quick Start
+
+Here is a simple example using the `EnvironmentAdapter`:
+
+```php
+<?php
+
+use Jinya\Configuration\Configuration;
+use Jinya\Configuration\Adapter\EnvironmentAdapter;
+
+// Create an adapter
+$adapter = new EnvironmentAdapter();
+
+// Initialize the configuration with the adapter
+$configuration = new Configuration([$adapter]);
+
+// Get a value from environment variables
+// It will look for 'APP_DEBUG'
+$debug = $adapter->get('debug', group: 'app');
+```

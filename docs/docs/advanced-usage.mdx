@@ -1,0 +1,72 @@
+---
+sidebar_position: 3
+---
+
+# Advanced Usage
+
+## Priority List
+
+The `Configuration` class can take a list of adapters. When you call `get()`, it will iterate through the adapters in the order they were provided and return the first non-null value it finds.
+
+```php
+<?php
+
+use Jinya\Configuration\Configuration;
+use Jinya\Configuration\Adapter\EnvironmentAdapter;
+use Jinya\Configuration\Adapter\IniAdapter;
+
+$configuration = new Configuration([
+    new EnvironmentAdapter(), // Check environment variables first
+    new IniAdapter('config.ini'), // Then check the INI file
+]);
+
+// If 'APP_DEBUG' is set in the environment, it will be returned.
+// Otherwise, it will look in config.ini.
+$debug = $adapter->get('debug', group: 'app');
+```
+
+### Adding Adapters Dynamically
+
+You can also add adapters after the `Configuration` object has been created using `addAdapter()`.
+
+```php
+<?php
+
+$configuration->addAdapter(new EnvironmentAdapter());
+
+// You can also specify a priority (index in the internal list)
+$configuration->addAdapter(new IniAdapter('config.ini'), priority: 0); // Becomes the first adapter
+```
+
+## Custom Adapters
+
+Creating a custom adapter is easy. Just implement the `Jinya\Configuration\Adapter\AdapterInterface`.
+
+```php
+<?php
+
+use Jinya\Configuration\Adapter\AdapterInterface;
+
+class MyCustomAdapter implements AdapterInterface
+{
+    public function get(string $key, ?string $group = null, bool|int|string|null $default = null): string|bool|int|null
+    {
+        // Your logic to retrieve the value
+    }
+
+    public function getAll(?string $group = null): array
+    {
+        // Your logic to retrieve all values in a group
+    }
+
+    public function set(string $key, bool|int|string $value, ?string $group = null): void
+    {
+        // Your logic to set a value, or throw SetNotSupportedException
+    }
+
+    public function delete(string $key, ?string $group = null): void
+    {
+        // Your logic to delete a value, or throw DeleteNotSupportedException
+    }
+}
+```

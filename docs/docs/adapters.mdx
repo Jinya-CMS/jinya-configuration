@@ -1,0 +1,70 @@
+---
+sidebar_position: 2
+---
+
+# Adapters
+
+Jinya Configuration comes with several built-in adapters to handle different configuration sources. All adapters implement the `AdapterInterface`.
+
+## EnvironmentAdapter
+
+The `EnvironmentAdapter` reads configuration from environment variables.
+
+- **Keys**: Converted to uppercase.
+- **Groups**: Prefixed to the key with an underscore (e.g., group `DB` and key `HOST` becomes `DB_HOST`).
+- **Writable**: Yes, uses `putenv`.
+
+```php
+<?php
+
+use Jinya\Configuration\Adapter\EnvironmentAdapter;
+
+$adapter = new EnvironmentAdapter();
+
+// Get 'APP_DEBUG'
+$debug = $adapter->get('debug', group: 'app');
+```
+
+## IniAdapter
+
+The `IniAdapter` reads configuration from INI files. It uses `parse_ini_file` with `INI_SCANNER_TYPED` for better type support.
+
+- **Groups**: Maps to INI sections.
+- **Writable**: No (throws `SetNotSupportedException`).
+
+```php
+<?php
+
+use Jinya\Configuration\Adapter\IniAdapter;
+
+$adapter = new IniAdapter('config.ini');
+
+// Get value from the top-level
+$value = $adapter->get('key');
+
+// Get value from [database] section
+$dbHost = $adapter->get('host', group: 'database');
+```
+
+## ArrayAdapter
+
+The `ArrayAdapter` uses a simple PHP array as the configuration source. This is useful for testing or for static configuration.
+
+- **Groups**: Maps to nested arrays.
+- **Writable**: Yes (updates the internal array).
+
+```php
+<?php
+
+use Jinya\Configuration\Adapter\ArrayAdapter;
+
+$adapter = new ArrayAdapter([
+    'debug' => true,
+    'database' => [
+        'host' => 'localhost',
+    ],
+]);
+
+$debug = $adapter->get('debug');
+$dbHost = $adapter->get('host', group: 'database');
+```
